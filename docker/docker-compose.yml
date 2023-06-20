@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/info.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - my-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - 8008:8008
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8008/info.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - my-network
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - my-network
+
+networks:
+  my-network:
