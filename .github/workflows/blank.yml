@@ -1,29 +1,23 @@
-name: Docker Build
+name: Docker Pull Workflow
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: docker-compose -f docker/docker-compose.yml up -d
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build PHP Docker Image
-        run: docker buildx build --file docker/php/Dockerfile.php --output "type=image,push=false" .
-
-      - name: Build MySQL Docker Image
-        run: docker buildx build --file docker/mysql/Dockerfile.mysql --output "type=image,push=false" .
-
-      - name: Build NGINX Docker Image
-        run: docker buildx build --file docker/nginx/Dockerfile.nginx --output "type=image,push=false" .
+    - name: Run script
+      run: |
+        chmod +x ./scripts/script.sh
+        ./scripts/script.sh
