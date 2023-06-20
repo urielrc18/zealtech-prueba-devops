@@ -5,7 +5,9 @@ docker pull php:latest
 docker pull nginx:latest
 docker pull mysql:latest
 
-export AWS_ACCESS_KEY_ID=AKIAZPZC3BZMDQIG5EVA
-export AWS_SECRET_ACCESS_KEY=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
-export AWS_DEFAULT_REGION=us-west-2
+
 aws configure
+AWS Access Key ID [None]: AKIAZPZC3BZMDQIG5EVA
+AWS Secret Access Key [None]: 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
+Default region name [None]: us-west-2
+Default output format [None]: json
