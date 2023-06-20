@@ -5,13 +5,10 @@ docker pull php:latest
 docker pull nginx:latest
 docker pull mysql:latest
 
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-
-aws configure
-AWS Access Key ID [None]: AKIAZPZC3BZMDQIG5EVA
-AWS Secret Access Key [None]: 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
-Default region name [None]: us-west-2
-Default output format [None]: json
+sudo apt update && sudo apt install software-properties-common gnupg2 curl
+curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor > hashicorp.gpg
+sudo install -o root -g root -m 644 hashicorp.gpg /etc/apt/trusted.gpg.d/
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt update && sudo apt install terraform
+terraform --version 
+pwd
