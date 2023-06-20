@@ -4,7 +4,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.php
+      docker: Dockerfile.php
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/info.php"]
       interval: 30s
@@ -16,7 +16,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile.nginx
+      docker: Dockerfile.nginx
     depends_on:
       - php
       - mysql
@@ -33,7 +33,7 @@ services:
   mysql:
     build:
       context: .
-      dockerfile: Dockerfile.mysql
+      docker: Dockerfile.mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
