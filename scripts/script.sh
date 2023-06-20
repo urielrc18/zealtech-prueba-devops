@@ -5,6 +5,10 @@ docker pull php:latest
 docker pull nginx:latest
 docker pull mysql:latest
 
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
 
 aws configure
 AWS Access Key ID [None]: AKIAZPZC3BZMDQIG5EVA
