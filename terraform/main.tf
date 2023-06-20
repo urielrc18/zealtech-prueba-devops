@@ -13,7 +13,7 @@ resource "aws_instance" "mi_instancia" {
 
 resource "aws_eip" "mi_eip" {
   instance = aws_instance.mi_instancia.id
-  vpc      = true
+  domain   = "vpc"
 }
 
 resource "aws_alb" "mi_alb" {
@@ -46,36 +46,6 @@ resource "aws_alb_listener" "listener_https" {
   certificate_arn   = "arn:aws:iam::123456789012:certificate/test" #sustituir por tu ARN de certificado
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_alb_target_group.mi_tg.arn
-  }
-}
-
-resource "aws_alb_listener_rule" "limit_ip" {
-  listener_arn = aws_alb_listener.listener_https.arn
-  priority     = 100
-
-  condition {
-    field  = "source-ip"
-    values = ["192.0.2.0/32"] # sustituir por tu rango de IP
-  }
-
-  action {
-    type             = "forward"
-    target_group_arn = aws_alb_target_group.mi_tg.arn
-  }
-}
-
-resource "aws_alb_listener_rule" "limit_post" {
-  listener_arn = aws_alb_listener.listener_https.arn
-  priority     = 200
-
-  condition {
-    field  = "http-request-method"
-    values = ["POST"]
-  }
-
-  action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.mi_tg.arn
   }
